@@ -11,7 +11,7 @@ cnx = st.connection("snowflake")
  # assuming 'session' was intended to be 'cnx'
 
 # Retrieve orders that are not filled
-my_dataframe = session.table("smoothies.public.orders").filter(col("ORDER_FILLED") == 0).collect()
+my_dataframe = cnx.table("smoothies.public.orders").filter(col("ORDER_FILLED") == 0).collect()
 
 if my_dataframe:
     editable_df = st.data_editor(my_dataframe)
