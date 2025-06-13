@@ -9,8 +9,10 @@ st.write("Choose the fruits you want in your custom Smoothie!")
 # Get active Snowflake session and retrieve fruit options
 cnx = st.connection("snowflake")
 
-# Collect fruit options from Snowflake
+# Get dataframe from Snowflake
 my_dataframe = cnx.table("smoothies.public.fruit_options").select(col('FRUIT_NAME')).collect()
+
+# Convert dataframe rows to list of fruit names
 fruit_options = [row['FRUIT_NAME'] for row in my_dataframe]
 
 # Input for customer's name
