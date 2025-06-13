@@ -8,7 +8,7 @@ st.title(":cup_with_straw: Customize your Smoothie! :cup_with_straw:")
 st.write("Choose the fruits you want in your custom Smoothie!")
 
 # Get active Snowflake session and connection
-cnx = st.connection("snowflake")
+
 session = get_active_session()
 
 # Query the fruit options from the correct database
