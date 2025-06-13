@@ -8,20 +8,9 @@ st.title(":cup_with_straw: Customise Your Smoothie! :cup_with_straw:")
 st.write("Choose the fruits you want in your custom Smoothie!")
 
 # Get active Snowflake session and retrieve fruit options
-connection_parameters = {
-    "account": "NVXXLMT.us-west-2.aws",
-    "user": "hardik123",
-    "password": "_Snowflake@2523",
-    "role": "SYSADMIN",
-    "warehouse": "COMPUTE_WH",
-    "database": "SMOOTHIES",
-    "schema": "PUBLIC"
-}
+cnx=st.connection("snowflake")
 
-# Create Snowflake Session directly
-session = Session.builder.configs(connection_parameters).create()
-
-my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
+my_dataframe = cnx.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 
 # Input for customer's name
 name_on_order = st.text_input("Name on Smoothie:")
