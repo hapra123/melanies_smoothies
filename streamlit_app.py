@@ -7,36 +7,36 @@ from snowflake.snowpark.functions import col
 st.title(":cup_with_straw: Customize your Smoothie! :cup_with_straw:")
 st.write("Choose the fruits you want in your custom Smoothie!")
 
-# Get Snowflake connection and session
+# Get active Snowflake session and connection
 cnx = st.connection("snowflake")
 session = get_active_session()
 
-# Fetch fruit options from the 'smoothies' table
-my_dataframe = cnx.table("smoothies.public.fruit_options").select(col('FRUIT_NAME')).to_pandas()
+# Query the fruit options from the correct database
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 
-# Text input for smoothie name
+# Display input for smoothie name
 name_on_order = st.text_input("Name of smoothie")
 st.write("The name of your smoothie will be:", name_on_order)
 
-# Multiselect for ingredients
+# Display multiselect for ingredients
 ingredients_list = st.multiselect(
     "Choose up to 5 ingredients",
-    my_dataframe['FRUIT_NAME'].tolist(),
+    my_dataframe.to_pandas()['FRUIT_NAME'].tolist(),
     max_selections=5
 )
 
-# If ingredients selected, prepare the insert statement
-if ingredients_list and name_on_order:
-    ingredients_string = ', '.join(ingredients_list)
-    st.write("Ingredients selected:", ingredients_string)
+# Handle the order submission
+if ingredients_list:
+    ingredients_string = ' '.join(ingredients_list)
 
-    # Prepare parameterized SQL for safety
-    my_insert_stmt = """
+    my_insert_stmt = f"""
         INSERT INTO smoothies.public.orders (ingredients, name_on_order)
-        VALUES (:1, :2)
+        VALUES ('{ingredients_string}', '{name_on_order}')
     """
-    
-    # Submit button to insert order
-    if st.button('Submit Order'):
-        session.sql(my_insert_stmt, params=[ingredients_string, name_on_order]).collect()
+
+    st.write(my_insert_stmt)
+
+    time_to_insert = st.button('Submit Order')
+    if time_to_insert:
+        session.sql(my_insert_stmt).collect()
         st.success('Your Smoothie is ordered!', icon="✅")
