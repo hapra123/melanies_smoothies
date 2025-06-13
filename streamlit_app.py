@@ -8,7 +8,7 @@ st.write("Orders that need to be filled")
 
 # Establish Snowflake connection
 cnx = st.connection("snowflake")
-session = cnx  # assuming 'session' was intended to be 'cnx'
+ # assuming 'session' was intended to be 'cnx'
 
 # Retrieve orders that are not filled
 my_dataframe = session.table("smoothies.public.orders").filter(col("ORDER_FILLED") == 0).collect()
@@ -20,7 +20,7 @@ if my_dataframe:
     
     if submitted:
         og_dataset = cnx.table("smoothies.public.orders")
-        edited_dataset = session.create_dataframe(editable_df)
+        edited_dataset = cnx.create_dataframe(editable_df)
 
         try:
             og_dataset.merge(
