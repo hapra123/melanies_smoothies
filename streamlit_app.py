@@ -10,7 +10,7 @@ st.write("Choose the fruits you want in your custom Smoothie!")
 # Get active Snowflake session and retrieve fruit options
 connection_parameters = {
     "account": "NVXXLMT.us-west-2.aws",
-    "user": "hapra123",
+    "user": "hardik123",
     "password": "_Snowflake@2523",
     "role": "SYSADMIN",
     "warehouse": "COMPUTE_WH",
