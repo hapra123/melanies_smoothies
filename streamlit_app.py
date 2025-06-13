@@ -1,14 +1,16 @@
-# Import python packages
 import streamlit as st
+from snowflake.snowpark import Session
 from snowflake.snowpark.functions import col, when_matched
-from snowflake.snowpark.context import get_active_session
 
-# Write directly to the app
+# Streamlit title and description
 st.title(":cup_with_straw: Pending Smoothie Orders :cup_with_straw:")
 st.write("Orders that need to be filled")
 
-# Establish Snowflake session (this automatically uses Streamlit connection config)
-session = get_active_session()
+# Get Streamlit Snowflake connection (credentials pulled from secrets)
+conn = st.connection("snowflake")
+
+# Create Snowpark Session manually using Streamlit connection's credentials
+session = Session.builder.configs(conn._secrets).create()
 
 # Retrieve orders that are not filled
 my_dataframe = session.table("smoothies.public.orders").filter(col("ORDER_FILLED") == 0).collect()
