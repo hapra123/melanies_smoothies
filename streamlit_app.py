@@ -18,8 +18,7 @@ name_on_order = st.text_input("Name on Smoothie:")
 # Multi-select for ingredients (max 5)
 ingredients_list = st.multiselect(
     "Choose up to 5 ingredients",
-    my_dataframe,
-    max_selections=5
+    my_dataframe
 )
 
 # If ingredients selected, prepare the insert statement
