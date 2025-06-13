@@ -8,6 +8,7 @@ st.write("Orders that need to be filled")
 
 # Establish Snowflake connection
 cnx = st.connection("snowflake")
+cnx=cnx.session
  # assuming 'session' was intended to be 'cnx'
 
 # Retrieve orders that are not filled
