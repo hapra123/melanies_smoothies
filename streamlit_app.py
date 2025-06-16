@@ -19,7 +19,7 @@ session = Session.builder.configs(conn._secrets).create()
 session.sql("USE DATABASE SMOOTHIES").collect()
 session.sql("USE SCHEMA PUBLIC").collect()
 
-my_dataframe = session.table("FRUIT_OPTIONS").select(col('FRUIT_NAME'),col('SEARCH_ON')
+my_dataframe = session.table("FRUIT_OPTIONS").select(col('FRUIT_NAME'),col('SEARCH_ON'))
 # st.dataframe(data=my_dataframe, use_container_width=True)
 pd_df=my_dataframe.to_pandas()
 name_on_order = st.text_input("Name on Smoothie:")
