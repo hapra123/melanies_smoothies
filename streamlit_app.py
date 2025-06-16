@@ -46,10 +46,10 @@ if ingredients_list:
     
     if time_to_insert:
         if ingredients_string:
-            if len(ingredients_list) >= 5:
+            if len(ingredients_list) <= 5:
                 session.sql(my_insert_stmt).collect()
                 st.success(f'{name_on_order}\'s Smoothie is ordered!', icon="✅")
             else:
-                st.error('Add atleast 5 Items to the Smoothie', icon="❌")
+                st.error('Only 5 Items are allowed Smoothie', icon="❌")
         else:
             st.error('Add Items to the Smoothie', icon="❌")
